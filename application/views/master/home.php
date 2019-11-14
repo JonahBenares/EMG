@@ -77,7 +77,7 @@
                                             <td><?php echo number_format($det['rtd'],2);?></td>
                                             <td><?php echo number_format($det['eap'],2); ?></td>
                                             <td></td>
-                                            <td><?php echo number_format($det['bcq'],2 );?></td>
+                                            <td><?php echo number_format($det['bcq'],2);?></td>
                                             <td class="faded-green"></td>
                                             <td class="faded-green"></td>
                                             <td class="faded-green"></td>

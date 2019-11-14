@@ -175,18 +175,18 @@ class Master extends CI_Controller {
     }
 
     public function insert_rtd(){
-        date_default_timezone_set("Asia/Taipei");
-        $time = date('g:i:s A');
-        $date=$this->uri->segment(3);
-        $counter = count($this->input->post('hour'));
+    	date_default_timezone_set("Asia/Taipei");
+		$time = date('g:i:s A');
+		$date=$this->uri->segment(3);
+    	$counter = count($this->input->post('hour'));
         $x = 0;
-        for($a=0;$a<=$counter;$a++){
-            //$hour=$this->input->post('hour['.$a.']');
-            //$rtd_date=$this->input->post('rtd_date['.$a.']');
-            //$actual_load=$this->input->post('actual_load['.$a.']');
-            //$metered=$this->input->post('metered['.$a.']');
-            //$bcq=$this->input->post('bcq['.$a.']');
-            //$capacity=$this->input->post('capacity['.$a.']');
+    	for($a=0;$a<=$counter;$a++){
+	    	//$hour=$this->input->post('hour['.$a.']');
+	    	//$rtd_date=$this->input->post('rtd_date['.$a.']');
+	    	//$actual_load=$this->input->post('actual_load['.$a.']');
+	    	//$metered=$this->input->post('metered['.$a.']');
+	    	//$bcq=$this->input->post('bcq['.$a.']');
+	    	//$capacity=$this->input->post('capacity['.$a.']');
             $data = array(
                 'rtd_hour'=>$this->input->post('hour['.$a.']'),
                 'rtd_date'=>$this->input->post('rtd_date'),
@@ -200,7 +200,7 @@ class Master extends CI_Controller {
             );
 
             $rtd_date=$this->input->post('rtd_date');
-            $id=$this->input->post('other['.$x.']');
+	    	$id=$this->input->post('other['.$x.']');
             $row=$this->super_model->count_rows_where("rtd_other","other_id",$id);
             //echo $x."<br>";
             //echo $id."<br>";
@@ -214,7 +214,7 @@ class Master extends CI_Controller {
                 }
             }
             $x++;
-        }
+    	}
     }
 
     public function dhourly_report(){  
