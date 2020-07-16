@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Master extends CI_Controller {
 
-	function __construct(){
+    function __construct(){
         parent::__construct();
         $this->load->helper(array('form', 'url'));
         $this->load->library('session');
@@ -59,7 +59,7 @@ class Master extends CI_Controller {
         }
     }
 
-	public function home(){  
+    public function home(){  
         $this->load->view('template/header');
         $this->load->view('template/sidebar');
         $date1=$this->uri->segment(3);
@@ -99,58 +99,32 @@ class Master extends CI_Controller {
 
             $include = $date1 . " " .$next.":00";
             if($next =='24'){
-                $date1 = date('Y-m-d',strtotime($date1.'+1 day'));   
-                $d = $date1 . " 00:00";
+                $date2 = date('Y-m-d',strtotime($date1.'+1 day'));   
+                $d = $date2 . " 00:00";
                 $inc = " OR interval_time = '$d'";
                
             } else {
                 $inc ='';
             }
-            //echo "rtd_hour = '$time' AND rtd_date = '$date1' AND actual_load !='0' <br>";
-            if(!empty($unit)){
+          //  echo "(interval_time LIKE '%$date%' OR interval_time = '$include' $inc) AND interval_time != '$except'<br>";
+            $average = $this->super_model->select_ave_where("rtd_info", "lmp", "(interval_time LIKE '%$date%' OR interval_time = '$include' $inc) AND interval_time != '$except'". $un_info .""); 
+            /*$average = $this->super_model->select_ave_where("rtd_info", "lmp", "interval_time LIKE '%$date%'". $un_info ."");*/ 
+            $rtd = $this->super_model->select_ave_where("rtd_info", "megawatts", "(interval_time LIKE '%$date%' OR interval_time = '$include' $inc) AND interval_time != '$except'". $un_info .""); 
+            $capacity = $this->super_model->select_ave_where("rtd_other", "capacity", "rtd_hour = '$next' AND rtd_date = '$date1' AND capacity !='0' ".$un_other."");
+            $anc_offered = $this->super_model->select_ave_where("rtd_other", "anc_offered", "rtd_hour = '$next' AND rtd_date = '$date1' AND anc_offered !='0' ".$un_other."");
+            $anc_confirmed = $this->super_model->select_ave_where("rtd_other", "anc_confirmed", "rtd_hour = '$next' AND rtd_date = '$date1' AND anc_confirmed !='0' ".$un_other."");
+            $actual_load = $this->super_model->select_ave_where("rtd_other", "actual_load", "rtd_hour = '$next' AND rtd_date = '$date1' AND actual_load !='0' ".$un_other."");
+            $mtr = $this->super_model->select_ave_where("rtd_other", "metered_q", "rtd_hour = '$next' AND rtd_date = '$date1' AND metered_q !='0' ".$un_other."");
+            $bcq = $this->super_model->select_ave_where("rtd_other", "bcq", "rtd_hour = '$next' AND rtd_date = '$date1' AND bcq !='0' ".$un_other."");
 
-                $average = $this->super_model->select_ave_where("rtd_info", "lmp", "(interval_time LIKE '%$date%' OR interval_time = '$include' $inc) AND interval_time != '$except'". $un_info .""); 
-
-                $rtd = $this->super_model->select_ave_where("rtd_info", "megawatts", "(interval_time LIKE '%$date%' OR interval_time = '$include' $inc) AND interval_time != '$except'". $un_info .""); 
-                $capacity = $this->super_model->select_ave_where("rtd_other", "capacity", "rtd_hour = '$time' AND rtd_date = '$date1' AND capacity !='0' ".$un_other."");
-                $actual_load = $this->super_model->select_ave_where("rtd_other", "actual_load", "rtd_hour = '$time' AND rtd_date = '$date1' AND actual_load !='0' ".$un_other."");
-                $mtr = $this->super_model->select_ave_where("rtd_other", "metered_q", "rtd_hour = '$time' AND rtd_date = '$date1' AND metered_q !='0' ".$un_other."");
-                $bcq = $this->super_model->select_ave_where("rtd_other", "bcq", "rtd_hour = '$time' AND rtd_date = '$date1' AND bcq !='0' ".$un_other."");
-
-              
-            } else {
-                $ave=array();
-                $r=array();
-                $ca=array();
-                $ac=array();
-                $mt=array();
-                $bc=array();
-                for($a=1;$a<=5;$a++){
-                    $ut='06CENPRI_U0'.$a;
-                    
-
-                    $r[]= $this->super_model->select_ave_where("rtd_info", "megawatts", "(interval_time LIKE '%$date%' OR interval_time = '$include' $inc) AND interval_time != '$except' AND price_node='$ut'"); 
-                    $ca[] = $this->super_model->select_ave_where("rtd_other", "capacity", "rtd_hour = '$time' AND rtd_date = '$date1' AND capacity !='0' AND unit='$ut'");
-                    $ac[] = $this->super_model->select_ave_where("rtd_other", "actual_load", "rtd_hour = '$time' AND rtd_date = '$date1' AND actual_load !='0' AND unit='$ut'");
-                    $mt[] = $this->super_model->select_ave_where("rtd_other", "metered_q", "rtd_hour = '$time' AND rtd_date = '$date1' AND metered_q !='0' AND unit='$ut'");
-                    $bc[] = $this->super_model->select_ave_where("rtd_other", "bcq", "rtd_hour = '$time' AND rtd_date = '$date1' AND bcq !='0' AND unit='$ut'");
-                }
-
-                $average = $this->super_model->select_ave_where("rtd_info", "lmp", "(interval_time LIKE '%$date%' OR interval_time = '$include' $inc) AND interval_time != '$except'". $un_info .""); 
-                $rtd=array_sum($r);
-                $capacity=array_sum($ca);
-                $actual_load=array_sum($ac);
-                $mtr=array_sum($mt);
-                $bcq =array_sum($bc);
-            }
-
-              $count_hour=$this->super_model->count_distinct("interval_time", "rtd_info","(interval_time LIKE '%$date%' OR interval_time = '$include' $inc) AND interval_time != '$except'");
+            $count_hour=$this->super_model->count_distinct("interval_time", "rtd_info","(interval_time LIKE '%$date%' OR interval_time = '$include' $inc) AND interval_time != '$except'");
             /*echo "(interval_time LIKE '%$date%' OR interval_time = '$include' $inc) AND interval_time != '$except'<br>";
             echo $date . " = ". $count_hour."<br>";*/
             $time=$time+1;
             if($time<=9){
                 $time='0'.$time;
             }
+            $revenue = $mtr*$average;
             $data['details'][] = array(
                 "time"=>$time,
                 "eap"=>$average,
@@ -160,43 +134,48 @@ class Master extends CI_Controller {
                 "mtr"=>$mtr,
                 "bcq"=>$bcq,
                 "count"=>$count_hour,
+                "revenue"=>$revenue,
+                "anc_offered"=>$anc_offered,
+                "anc_confirmed"=>$anc_confirmed,
                 "unit"=>$unit
             );
         }
-		$this->load->view('master/home',$data);
+        $this->load->view('master/home',$data);
         $this->load->view('template/footer');
-	}
+    }
 
     public function upload_rtd_other(){
-    	$date=$this->uri->segment(3);
+        $date=$this->uri->segment(3);
         $data['date']= $date;
         /*$hour=$this->input->post('hour');
         $data['hour']=$hour;*/
         /*if(empty($date)){
-    		$data['test'] = $this->super_model->select_custom_where("rtd_other","rtd_date = '$date1'");
-    	}else {
-    		$data['test'] = $this->super_model->select_custom_where("rtd_other","rtd_date = '$date'");
-    	}*/
-    	/*$rows=$this->super_model->count_rows("rtd_other");
-    	if($rows!=0){*/
-    	$row=$this->super_model->count_rows_where("rtd_other",'rtd_date', $date);
+            $data['test'] = $this->super_model->select_custom_where("rtd_other","rtd_date = '$date1'");
+        }else {
+            $data['test'] = $this->super_model->select_custom_where("rtd_other","rtd_date = '$date'");
+        }*/
+        /*$rows=$this->super_model->count_rows("rtd_other");
+        if($rows!=0){*/
+        $row=$this->super_model->count_rows_where("rtd_other",'rtd_date', $date);
         if($row!=0){
-		    	foreach($this->super_model->select_row_where('rtd_other','rtd_date', $date) AS $rtd){
-		    		$data['other'][] = array(
-		    			'other_id'=>$rtd->other_id,
-		    			'rtd_date'=>$rtd->rtd_date,
-		    			'rtd_hour'=>$rtd->rtd_hour,
-		    			'actual_load'=>$rtd->actual_load,
-		    			'metered_q'=>$rtd->metered_q,
-		    			'bcq'=>$rtd->bcq,
-		    			'capacity'=>$rtd->capacity,
+                foreach($this->super_model->select_row_where('rtd_other','rtd_date', $date) AS $rtd){
+                    $data['other'][] = array(
+                        'other_id'=>$rtd->other_id,
+                        'rtd_date'=>$rtd->rtd_date,
+                        'rtd_hour'=>$rtd->rtd_hour,
+                        'actual_load'=>$rtd->actual_load,
+                        'metered_q'=>$rtd->metered_q,
+                        'bcq'=>$rtd->bcq,
+                        'capacity'=>$rtd->capacity,
+                        'anc_offered'=>$rtd->anc_offered,
+                        'anc_confirmed'=>$rtd->anc_confirmed,
                         'unit'=>$rtd->unit
-		    		);
-		    	}
-    	}else{
-    		$data['other'] = array();
-    	}
-    	
+                    );
+                }
+        }else{
+            $data['other'] = array();
+        }
+        
         $this->load->view('template/header');
         $this->load->view('template/sidebar');
         $this->load->view('master/upload_rtd_other', $data);
@@ -204,18 +183,18 @@ class Master extends CI_Controller {
     }
 
     public function insert_rtd(){
-    	date_default_timezone_set("Asia/Taipei");
-		$time = date('g:i:s A');
-		$date=$this->uri->segment(3);
-    	$counter = count($this->input->post('hour'));
+        date_default_timezone_set("Asia/Taipei");
+        $time = date('g:i:s A');
+        $date=$this->uri->segment(3);
+        $counter = count($this->input->post('hour'));
         $x = 0;
-    	for($a=0;$a<=$counter;$a++){
-	    	//$hour=$this->input->post('hour['.$a.']');
-	    	//$rtd_date=$this->input->post('rtd_date['.$a.']');
-	    	//$actual_load=$this->input->post('actual_load['.$a.']');
-	    	//$metered=$this->input->post('metered['.$a.']');
-	    	//$bcq=$this->input->post('bcq['.$a.']');
-	    	//$capacity=$this->input->post('capacity['.$a.']');
+        for($a=0;$a<=$counter;$a++){
+            //$hour=$this->input->post('hour['.$a.']');
+            //$rtd_date=$this->input->post('rtd_date['.$a.']');
+            //$actual_load=$this->input->post('actual_load['.$a.']');
+            //$metered=$this->input->post('metered['.$a.']');
+            //$bcq=$this->input->post('bcq['.$a.']');
+            //$capacity=$this->input->post('capacity['.$a.']');
             $data = array(
                 'rtd_hour'=>$this->input->post('hour['.$a.']'),
                 'rtd_date'=>$this->input->post('rtd_date'),
@@ -225,15 +204,17 @@ class Master extends CI_Controller {
                 'capacity'=>$this->input->post('capacity['.$a.']'),
                 'upload_time'=>$time,
                 'unit'=>$this->input->post('unit['.$a.']'),
+                'anc_offered'=>$this->input->post('anc_offered['.$a.']'),
+                'anc_confirmed'=>$this->input->post('anc_confirmed['.$a.']'),
                 'user_id'=>$this->input->post('userid')
             );
 
             $rtd_date=$this->input->post('rtd_date');
-	    	$id=$this->input->post('other['.$x.']');
+            $id=$this->input->post('other['.$x.']');
             $row=$this->super_model->count_rows_where("rtd_other","other_id",$id);
             //echo $x."<br>";
             //echo $id."<br>";
-            if($row>0){
+            if($id!=0){
                 if($this->super_model->update_where("rtd_other", $data,'other_id',$id)){
                     echo "<script>alert('Successfully Updated!'); window.location ='".base_url()."index.php/master/upload_rtd_other/$rtd_date'; </script>";
                 }
@@ -242,8 +223,9 @@ class Master extends CI_Controller {
                     echo "<script>alert('Successfully Added!'); window.location ='".base_url()."index.php/master/upload_rtd_other/$rtd_date'; </script>";
                 }
             }
+
             $x++;
-    	}
+        }
     }
 
     public function dhourly_report(){  
@@ -358,28 +340,30 @@ class Master extends CI_Controller {
         }else{
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E1', "Unit:");
         }
-        $objPHPExcel->getActiveSheet()->getStyle("A1:L1")->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('DFFAAA');
-        $objPHPExcel->getActiveSheet()->getStyle("A2:L2")->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('36EAFF');
-        $objPHPExcel->getActiveSheet()->getStyle("M1:O1")->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('83F997');
-        $objPHPExcel->getActiveSheet()->getStyle("M2:O2")->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('83F997');
-        $objPHPExcel->getActiveSheet()->getStyle("P1:R1")->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('DFFAAA');
-        $objPHPExcel->getActiveSheet()->getStyle("P2:R2")->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('DFFAAA');
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('M1', "ANCILLARY OFFERED");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('P1', "ANCILLARY CONFIRMED");
+        $objPHPExcel->getActiveSheet()->getStyle("A1:K1")->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('DFFAAA');
+        $objPHPExcel->getActiveSheet()->getStyle("A2:K2")->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('36EAFF');
+        $objPHPExcel->getActiveSheet()->getStyle("L1:N1")->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('83F997');
+        $objPHPExcel->getActiveSheet()->getStyle("L2:N2")->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('83F997');
+        $objPHPExcel->getActiveSheet()->getStyle("O1:R1")->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('DFFAAA');
+        $objPHPExcel->getActiveSheet()->getStyle("O2:R2")->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('DFFAAA');
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L1', "ANCILLARY OFFERED");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('O1', "ANCILLARY CONFIRMED");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R1', "Revenue");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A2', "Hour");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C2', "Capacity");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E2', "Actual Load");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G2', "Metered Q");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('I2', "RTD");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('J2', "EAP");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('K2', "PEN");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L2', "BCQ");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('M2', "REG");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N2', "CON");
+        //$objPHPExcel->setActiveSheetIndex(0)->setCellValue('K2', "PEN");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('K2', "BCQ");
+        //$objPHPExcel->setActiveSheetIndex(0)->setCellValue('M2', "REG");
+        //$objPHPExcel->setActiveSheetIndex(0)->setCellValue('N2', "CON");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L2', "DIS");
+        //$objPHPExcel->setActiveSheetIndex(0)->setCellValue('P2', "REG");
+        //$objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q2', "CON");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('O2', "DIS");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('P2', "REG");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q2', "CON");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R2', "DIS");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R2', "Revenue");
         $styleArray = array(
             'borders' => array(
                 'allborders' => array(
@@ -415,11 +399,20 @@ class Master extends CI_Controller {
             $except = $date1. " " .$time.":00";
             $next = $time+1;
             if($next<10){
-                $next = $next;
+                $next = '0'.$next;
             } else {
                 $next=$next;
             }
+
             $include = $date1 . " " .$next.":00";
+            if($next =='25'){
+                $date1 = date('Y-m-d',strtotime($date1.'+1 day'));   
+                $d = $date1 . " 00:00";
+                $inc = " OR interval_time = '$d'";
+               
+            } else {
+                $inc ='';
+            }
             /*$average = $this->super_model->select_ave_where("rtd_info", "lmp", "interval_time LIKE '%$date%' ". $un_info .""); 
             $rtd = $this->super_model->select_ave_where("rtd_info", "megawatts", "interval_time LIKE '%$date%' ". $un_info ."");
             $capacity = $this->super_model->select_ave_where("rtd_other", "capacity", "rtd_hour = '$time' AND rtd_date = '$date1' AND capacity !='0' ".$un_other."");
@@ -427,14 +420,17 @@ class Master extends CI_Controller {
             $mtr = $this->super_model->select_ave_where("rtd_other", "metered_q", "rtd_hour = '$time' AND rtd_date = '$date1' AND metered_q !='0' ".$un_other."");
             $bcq = $this->super_model->select_ave_where("rtd_other", "bcq", "rtd_hour = '$time' AND rtd_date = '$date1' AND bcq !='0' ".$un_other."");
             $count_hour=$this->super_model->count_distinct("interval_time", "rtd_info","interval_time LIKE '%$date%'");*/
-            $average = $this->super_model->select_ave_where("rtd_info", "lmp", "(interval_time LIKE '%$date%' OR interval_time = '$include') AND interval_time != '$except'". $un_info ."");  
-            $rtd = $this->super_model->select_ave_where("rtd_info", "megawatts", "(interval_time LIKE '%$date%' OR interval_time = '$include') AND interval_time != '$except'". $un_info .""); 
-            $capacity = $this->super_model->select_ave_where("rtd_other", "capacity", "rtd_hour = '$time' AND rtd_date = '$date1' AND capacity !='0' ".$un_other."");
-            $actual_load = $this->super_model->select_ave_where("rtd_other", "actual_load", "rtd_hour = '$time' AND rtd_date = '$date1' AND actual_load !='0' ".$un_other."");
-            $mtr = $this->super_model->select_ave_where("rtd_other", "metered_q", "rtd_hour = '$time' AND rtd_date = '$date1' AND metered_q !='0' ".$un_other."");
-            $bcq = $this->super_model->select_ave_where("rtd_other", "bcq", "rtd_hour = '$time' AND rtd_date = '$date1' AND bcq !='0' ".$un_other."");
+            $average = $this->super_model->select_ave_where("rtd_info", "lmp", "(interval_time LIKE '%$date%' OR interval_time = '$include' $inc) AND interval_time != '$except'". $un_info ."");  
+            $rtd = $this->super_model->select_ave_where("rtd_info", "megawatts", "(interval_time LIKE '%$date%' OR interval_time = '$include' $inc) AND interval_time != '$except'". $un_info .""); 
+            $capacity = $this->super_model->select_ave_where("rtd_other", "capacity", "rtd_hour = '$next' AND rtd_date = '$date1' AND capacity !='0' ".$un_other."");
+            $anc_offered = $this->super_model->select_ave_where("rtd_other", "anc_offered", "rtd_hour = '$next' AND rtd_date = '$date1' AND anc_offered !='0' ".$un_other."");
+            $anc_confirmed = $this->super_model->select_ave_where("rtd_other", "anc_confirmed", "rtd_hour = '$next' AND rtd_date = '$date1' AND anc_confirmed !='0' ".$un_other."");
+            $actual_load = $this->super_model->select_ave_where("rtd_other", "actual_load", "rtd_hour = '$next' AND rtd_date = '$date1' AND actual_load !='0' ".$un_other."");
+            $mtr = $this->super_model->select_ave_where("rtd_other", "metered_q", "rtd_hour = '$next' AND rtd_date = '$date1' AND metered_q !='0' ".$un_other."");
+            $bcq = $this->super_model->select_ave_where("rtd_other", "bcq", "rtd_hour = '$next' AND rtd_date = '$date1' AND bcq !='0' ".$un_other."");
 
-            $count_hour=$this->super_model->count_distinct("interval_time", "rtd_info","(interval_time LIKE '%$date%' OR interval_time = '$include') AND interval_time != '$except'");
+            $count_hour=$this->super_model->count_distinct("interval_time", "rtd_info","(interval_time LIKE '%$date%' OR interval_time = '$include' $inc) AND interval_time != '$except'");
+            $revenue = $mtr*$average;
             $time=$time+1;
             if($time<=9){
                 $time='0'.$time;
@@ -474,46 +470,74 @@ class Master extends CI_Controller {
             else {
                 $rtd = $rtd;
             }
+
+            if($anc_offered==0){
+                $anc_offered='0.00';
+            }
+            else {
+                $anc_offered = $anc_offered;
+            }
+
+            if($anc_confirmed==0){
+                $anc_confirmed='0.00';
+            }
+            else {
+                $anc_confirmed = $anc_confirmed;
+            }
+
+            if($bcq==0){
+                $bcq='0.00';
+            }
+            else {
+                $bcq = $bcq;
+            }
+
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$num, $time);
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C'.$num, $capacity);
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E'.$num, $actual_load);
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G'.$num, $mtr);
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('I'.$num, $rtd);
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('J'.$num, $average);
-            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('K'.$num, '');
-            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L'.$num, $bcq);
-            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('M'.$num, '');
-            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N'.$num, '');
-            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('O'.$num, '');
+            //$objPHPExcel->setActiveSheetIndex(0)->setCellValue('K'.$num, '');
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('K'.$num, $bcq);
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L'.$num, $anc_offered);
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('O'.$num, $anc_confirmed);
+            /*$objPHPExcel->setActiveSheetIndex(0)->setCellValue('O'.$num, '');
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('P'.$num, '');
-            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q'.$num, '');
-            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R'.$num, '');
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q'.$num, '');*/
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R'.$num, $revenue);
             $objPHPExcel->getActiveSheet()->getStyle('B'.$num.":R".$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
             $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":R".$num)->applyFromArray($styleArray);
-            $objPHPExcel->getActiveSheet()->getStyle('M'.$num.":O".$num)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('83F997');
-            $objPHPExcel->getActiveSheet()->getStyle('P'.$num.":R".$num)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('DFFAAA');
+            $objPHPExcel->getActiveSheet()->getStyle('L'.$num.":N".$num)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('83F997');
+            $objPHPExcel->getActiveSheet()->getStyle('O'.$num.":R".$num)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('DFFAAA');
             $objPHPExcel->getActiveSheet()->getStyle('A'.$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            $objPHPExcel->getActiveSheet()->getStyle('L'.$num.":R".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
             $objPHPExcel->getActiveSheet()->mergeCells('A'.$num.":B".$num);
             $objPHPExcel->getActiveSheet()->mergeCells('C'.$num.":D".$num);
             $objPHPExcel->getActiveSheet()->mergeCells('E'.$num.":F".$num);
             $objPHPExcel->getActiveSheet()->mergeCells('G'.$num.":H".$num);
+            $objPHPExcel->getActiveSheet()->mergeCells('L'.$num.":N".$num);
+            $objPHPExcel->getActiveSheet()->mergeCells('O'.$num.":Q".$num);
             $num++;
         }
         $objPHPExcel->getActiveSheet()->mergeCells('A1:D1');
-        $objPHPExcel->getActiveSheet()->mergeCells('E1:L1');
+        $objPHPExcel->getActiveSheet()->mergeCells('E1:K1');
         $objPHPExcel->getActiveSheet()->mergeCells('A2:B2');
         $objPHPExcel->getActiveSheet()->mergeCells('C2:D2');
         $objPHPExcel->getActiveSheet()->mergeCells('E2:F2');
         $objPHPExcel->getActiveSheet()->mergeCells('G2:H2');
-        $objPHPExcel->getActiveSheet()->mergeCells('M1:O1');
-        $objPHPExcel->getActiveSheet()->mergeCells('P1:R1');
-        $objPHPExcel->getActiveSheet()->getStyle('M1:P1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $objPHPExcel->getActiveSheet()->mergeCells('L1:N1');
+        $objPHPExcel->getActiveSheet()->mergeCells('O1:Q1');
+        $objPHPExcel->getActiveSheet()->mergeCells("L2:N2");
+        $objPHPExcel->getActiveSheet()->mergeCells("O2:Q2");
+        $objPHPExcel->getActiveSheet()->getStyle('L1:O1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
         $objPHPExcel->getActiveSheet()->getStyle('A2:R2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
         $objPHPExcel->getActiveSheet()->getStyle("A1")->getFont()->setBold(true)->setName('Arial Black')->setSize(13);
         $objPHPExcel->getActiveSheet()->getStyle("E1")->getFont()->setBold(true)->setName('Arial Black')->setSize(13);
         //$objPHPExcel->getActiveSheet()->getStyle("E2")->getFont()->setBold(true)->setName('Arial Black')->setSize(13);
         $objPHPExcel->getActiveSheet()->getStyle('A2:R2')->getFont()->setBold(true);
-        $objPHPExcel->getActiveSheet()->getStyle('M1:P1')->getFont()->setBold(true);
+        $objPHPExcel->getActiveSheet()->getStyle('L1:O1')->getFont()->setBold(true);
+        $objPHPExcel->getActiveSheet()->getStyle('R1')->getFont()->setBold(true);
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
         if (file_exists($exportfilename))
         unlink($exportfilename);

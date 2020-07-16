@@ -14,7 +14,7 @@
                                 <table class="table table-hover table-bordered">
                                     <thead>
                                         <tr>
-                                            <th class="align-left faded-yellow" colspan="8" >
+                                            <th class="align-left faded-yellow" colspan="7" >
                                                 <label class="pl-3" style="font-size: 1.6em">
                                                     <span class="fa fa-calendar"></span> 
                                                 </label>
@@ -35,6 +35,7 @@
                                             </th>
                                             <th class="align-center faded-green" colspan="3">ANCILLARY OFFERED</th>
                                             <th class="align-center faded-orange" colspan="3">ANCILLARY CONFIRMED</th>
+                                            <th class="align-center faded-orange">REVENUE</th>
                                         </tr>
                                         <tr>
                                             <th class="align-center faded-spl">Hour</th>
@@ -43,14 +44,15 @@
                                             <th class="align-center faded-spl">Metered Q</th>
                                             <th class="align-center faded-spl">RTD</th>
                                             <th class="align-center faded-spl">EAP</th>
-                                            <th class="align-center faded-spl">PEN</th>
+                                            <!-- <th class="align-center faded-spl">PEN</th> -->
                                             <th class="align-center faded-spl">BCQ</th>
-                                            <th class="align-center faded-green">Reg</th>
-                                            <th class="align-center faded-green">Con</th>
-                                            <th class="align-center faded-green">Dis</th>
-                                            <th class="align-center faded-orange">Reg</th>
-                                            <th class="align-center faded-orange">Con</th>
-                                            <th class="align-center faded-orange">Dis</th>
+                                            <!-- <th class="align-center faded-green">Reg</th>
+                                            <th class="align-center faded-green">Con</th> -->
+                                            <th class="align-center faded-green" colspan="3">Dis</th>
+                                            <!-- <th class="align-center faded-orange">Reg</th>
+                                            <th class="align-center faded-orange">Con</th> -->
+                                            <th class="align-center faded-orange" colspan="3">Dis</th>
+                                            <th class="align-center faded-orange">Revenue</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -76,14 +78,15 @@
                                             <td><?php echo number_format($det['mtr'],2);?></td>
                                             <td><?php echo number_format($det['rtd'],2);?></td>
                                             <td><?php echo number_format($det['eap'],2); ?></td>
-                                            <td></td>
+                                            <!-- <td></td> -->
                                             <td><?php echo number_format($det['bcq'],2);?></td>
-                                            <td class="faded-green"></td>
-                                            <td class="faded-green"></td>
-                                            <td class="faded-green"></td>
-                                            <td class="faded-orange"></td>
-                                            <td class="faded-orange"></td>
-                                            <td class="faded-orange"></td>
+                                            <td class="faded-green" colspan="3" align="center"><?php echo number_format($det['anc_offered'],2);?></td>
+                                           <!--  <td class="faded-green"></td>
+                                            <td class="faded-green"></td> -->
+                                            <td class="faded-orange" colspan="3" align="center"><?php echo number_format($det['anc_confirmed'],2);?></td>
+                                            <td class="faded-orange" align="center"><?php echo number_format($det['revenue'],2)?></td>
+                                            <!-- <td class="faded-orange"></td>
+                                            <td class="faded-orange"></td> -->
                                         </tr>
                                         <?php } } else { ?>
                                         <?php 

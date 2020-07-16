@@ -33,6 +33,8 @@
                                                 <th class="align-center faded-spl">Metered Q</th>
                                                 <th class="align-center faded-spl">BCQ</th>
                                                 <th class="align-center faded-spl">Capacity</th>
+                                                <th class="align-center faded-spl">Ancillary Offered</th>
+                                                <th class="align-center faded-spl">Ancillary Confirmed</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -50,15 +52,16 @@
                                            // for($x=0;$x<=24;$x++){
                                             //print_r($other);
                                            // foreach($other AS $t){  
+                                            //print_r($other[$a]);
                                         ?>  
                                             <tr >
                                                 <td class="align-center faded-green" rowspan="5" style="border-bottom:3px solid #dedede">
-                                                    <input type="hidden" name = "other[]" style="border:0px solid #000" value = "<?php if(empty($other)){ } else{ echo $other[$x]['other_id']; }?>" readonly>
+                                                    <input type="hidden" name = "other[]" style="border:0px solid #000" value = "<?php if(empty($other)){ } else{ echo $other[$a]['other_id']; }?>" readonly>
                                                     <input type="text" name = "hour[]" style="border:0px solid #000" value = "<?php echo $time;  //if(empty($other)){ echo $time; } else{ echo $other[$x]['rtd_hour']; } ?>" readonly>
                                                 </td>
                                               
                                                 <td class="align-center">
-                                                    <input type="hidden" name = "hour[]" style="border:0px solid #000" value = "<?php if(empty($other)){ echo $time; } else{ echo $other[$x]['rtd_hour']; }?>" readonly>
+                                                    <input type="hidden" name = "hour[]" style="border:0px solid #000" value = "<?php if(empty($other)){ echo $time; } else{ echo $other[$a]['rtd_hour']; }?>" readonly>
                                                     <input type="text" name = "unit[]" style="border:0px solid #000;text-align:center" value = "<?php if(empty($other)){ echo '06CENPRI_U01'; } else{ echo $other[$a]['unit']; }?>">
                                                 </td>
                                                
@@ -73,15 +76,21 @@
                                                     <input type="text" name = "bcq[]" style="border:0px solid #000" value = "<?php if(empty($other)){ } else{ echo $other[$a]['bcq']; }?>">
                                                 </td>
                                                 <td>
-                                                    <input type="text" name = "capacity[]" style="border:0px solid #000" value = "<?php if(empty($other)){ } else{ echo $other[$a]['capacity'];}?>" id="capacity1_<?php echo $x; ?>" class="capacity1" >
-                                                    <!--onkeyup="duplicateCap();"-->
+                                                    <input type="text" name = "capacity[]" style="border:0px solid #000" value = "<?php if(empty($other)){ } else{ echo $other[$a]['capacity'];}?>" id="capacity1_<?php echo $x; ?>" class="capacity1" onkeyup="duplicateCap();">
+                                                </td>
+                                                <td>
+                                                    <input type="text" name = "anc_offered[]" style="border:0px solid #000" value = "<?php if(empty($other)){ } else{ echo $other[$a]['anc_offered'];}?>">
+                                                </td>
+                                                <td>
+                                                    <input type="text" name = "anc_confirmed[]" style="border:0px solid #000" value = "<?php if(empty($other)){ } else{ echo $other[$a]['anc_confirmed'];}?>">
                                                 </td>
                                             </tr>
                                             <?php $a++; ?>
                                             <tr>
                                               
                                                 <td class="align-center">
-                                                    <input type="hidden" name = "hour[]" style="border:0px solid #000" value = "<?php if(empty($other)){ echo $time; } else{ echo $other[$x]['rtd_hour']; }?>" readonly>
+                                                    <input type="hidden" name = "other[]" style="border:0px solid #000" value = "<?php if(empty($other)){ } else{ echo $other[$a]['other_id']; }?>" readonly>
+                                                    <input type="hidden" name = "hour[]" style="border:0px solid #000" value = "<?php if(empty($other)){ echo $time; } else{ echo $other[$a]['rtd_hour']; }?>" readonly>
                                                     <input type="text" name = "unit[]" style="border:0px solid #000;text-align:center" value = "<?php if(empty($other)){ echo '06CENPRI_U02'; } else{ echo $other[$a]['unit']; }?>">
                                                 </td>
                                                 <td>
@@ -90,19 +99,24 @@
                                                 <td>
                                                     <input type="text" name = "metered[]" style="border:0px solid #000" value = "<?php if(empty($other)){ } else{ echo $other[$a]['metered_q']; }?>">
                                                 </td>
-                                                
-                                                 <td>
+                                                <td>
                                                     <input type="text" name = "bcq[]" style="border:0px solid #000" value = "<?php if(empty($other)){ } else{ echo $other[$a]['bcq']; }?>">
                                                 </td>
                                                 <td>
                                                     <input type="text" name = "capacity[]" style="border:0px solid #000" value = "<?php if(empty($other)){ } else{ echo $other[$a]['capacity'];}?>" id="capacity2_<?php echo $x; ?>" class="capacity2" onkeyup="duplicateCap();">
                                                 </td>
-                                                
+                                                <td>
+                                                    <input type="text" name = "anc_offered[]" style="border:0px solid #000" value = "<?php if(empty($other)){ } else{ echo $other[$a]['anc_offered']; }?>">
+                                                </td>
+                                                <td>
+                                                    <input type="text" name = "anc_confirmed[]" style="border:0px solid #000" value = "<?php if(empty($other)){ } else{ echo $other[$a]['anc_confirmed']; }?>">
+                                                </td>
                                             </tr>
                                             <?php $a++; ?>
                                             <tr>
                                                 <td class="align-center">
-                                                   <input type="hidden" name = "hour[]" style="border:0px solid #000" value = "<?php if(empty($other)){ echo $time; } else{ echo $other[$x]['rtd_hour']; }?>" readonly> 
+                                                    <input type="hidden" name = "other[]" style="border:0px solid #000" value = "<?php if(empty($other)){ } else{ echo $other[$a]['other_id']; }?>" readonly>
+                                                   <input type="hidden" name = "hour[]" style="border:0px solid #000" value = "<?php if(empty($other)){ echo $time; } else{ echo $other[$a]['rtd_hour']; }?>" readonly> 
                                                     <input type="text" name = "unit[]" style="border:0px solid #000;text-align:center" value = "<?php if(empty($other)){ echo '06CENPRI_U03'; } else{ echo $other[$a]['unit']; }?>">
                                                 </td>
                                                 <td>
@@ -118,11 +132,18 @@
                                                 <td>
                                                     <input type="text" name = "capacity[]" style="border:0px solid #000" value = "<?php if(empty($other)){ } else{ echo $other[$a]['capacity'];}?>" id="capacity3_<?php echo $x; ?>" class="capacity3" onkeyup="duplicateCap();">
                                                 </td>
+                                                <td>
+                                                    <input type="text" name = "anc_offered[]" style="border:0px solid #000" value = "<?php if(empty($other)){ } else{ echo $other[$a]['anc_offered']; }?>">
+                                                </td>
+                                                <td>
+                                                    <input type="text" name = "anc_confirmed[]" style="border:0px solid #000" value = "<?php if(empty($other)){ } else{ echo $other[$a]['anc_confirmed']; }?>">
+                                                </td>
                                             </tr>
                                              <?php $a++; ?>
                                             <tr>
                                                 <td class="align-center">
-                                                    <input type="hidden" name = "hour[]" style="border:0px solid #000" value = "<?php if(empty($other)){ echo $time; } else{ echo $other[$x]['rtd_hour']; }?>" readonly>
+                                                    <input type="hidden" name = "other[]" style="border:0px solid #000" value = "<?php if(empty($other)){ } else{ echo $other[$a]['other_id']; }?>" readonly>
+                                                    <input type="hidden" name = "hour[]" style="border:0px solid #000" value = "<?php if(empty($other)){ echo $time; } else{ echo $other[$a]['rtd_hour']; }?>" readonly>
                                                     <input type="text" name = "unit[]" style="border:0px solid #000;text-align:center" value = "<?php if(empty($other)){ echo '06CENPRI_U04'; } else{ echo $other[$a]['unit']; }?>">
                                                 </td>
                                                 <td>
@@ -138,10 +159,17 @@
                                                 <td>
                                                     <input type="text" name = "capacity[]" style="border:0px solid #000" value = "<?php if(empty($other)){ } else{ echo $other[$a]['capacity'];}?>" id="capacity4_<?php echo $x; ?>" class="capacity4" onkeyup="duplicateCap();">
                                                 </td>
+                                                <td>
+                                                    <input type="text" name = "anc_offered[]" style="border:0px solid #000" value = "<?php if(empty($other)){ } else{ echo $other[$a]['anc_offered']; }?>">
+                                                </td>
+                                                <td>
+                                                    <input type="text" name = "anc_confirmed[]" style="border:0px solid #000" value = "<?php if(empty($other)){ } else{ echo $other[$a]['anc_confirmed']; }?>">
+                                                </td>
                                             </tr>
                                              <?php $a++; ?>
                                             <tr style="border-bottom:3px solid #dedede">
                                                 <td class="align-center">
+                                                    <input type="hidden" name = "other[]" style="border:0px solid #000" value = "<?php if(empty($other)){ } else{ echo $other[$a]['other_id']; }?>" readonly>
                                                     <input type="text" name = "unit[]" style="border:0px solid #000;text-align:center" value = "<?php if(empty($other)){ echo '06CENPRI_U05'; } else{ echo $other[$a]['unit']; }?>">
                                                 </td>
                                                 <td>
@@ -156,6 +184,12 @@
                                                 </td>
                                                 <td>
                                                     <input type="text" name = "capacity[]" style="border:0px solid #000" value = "<?php if(empty($other)){ } else{ echo $other[$a]['capacity'];}?>" id="capacity5_<?php echo $x; ?>" class="capacity5" onkeyup="duplicateCap();">
+                                                </td>
+                                                <td>
+                                                    <input type="text" name = "anc_offered[]" style="border:0px solid #000" value = "<?php if(empty($other)){ } else{ echo $other[$a]['anc_offered']; }?>">
+                                                </td>
+                                                <td>
+                                                    <input type="text" name = "anc_confirmed[]" style="border:0px solid #000" value = "<?php if(empty($other)){ } else{ echo $other[$a]['anc_confirmed']; }?>">
                                                 </td>
                                             </tr>
                                             <?php $a++; } //} ?> 

@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Reports extends CI_Controller {
 
-	function __construct(){
+    function __construct(){
         parent::__construct();
         $this->load->helper(array('form', 'url'));
         $this->load->library('session');
@@ -169,6 +169,13 @@ class Reports extends CI_Controller {
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E'.$num, $all->megawatts);
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G'.$num, $all->lmp);
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('I'.$num, $all->loss_factor);
+                $objPHPExcel->getActiveSheet()->mergeCells('A'.$num.":B".$num);
+                $objPHPExcel->getActiveSheet()->mergeCells('C'.$num.":D".$num);
+                $objPHPExcel->getActiveSheet()->mergeCells('E'.$num.":F".$num);
+                $objPHPExcel->getActiveSheet()->mergeCells('G'.$num.":H".$num);
+                $objPHPExcel->getActiveSheet()->mergeCells('I'.$num.":J".$num);
+                $objPHPExcel->getActiveSheet()->getStyle('C'.$num.":K".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
                 $num++;
             }
         }else if($date!='null' && $time1!='null'){
@@ -179,6 +186,12 @@ class Reports extends CI_Controller {
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E'.$num, $all->megawatts);
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G'.$num, $all->lmp);
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('I'.$num, $all->loss_factor);
+                $objPHPExcel->getActiveSheet()->mergeCells('A'.$num.":B".$num);
+                $objPHPExcel->getActiveSheet()->mergeCells('C'.$num.":D".$num);
+                $objPHPExcel->getActiveSheet()->mergeCells('E'.$num.":F".$num);
+                $objPHPExcel->getActiveSheet()->mergeCells('G'.$num.":H".$num);
+                $objPHPExcel->getActiveSheet()->mergeCells('I'.$num.":J".$num);
+                $objPHPExcel->getActiveSheet()->getStyle('C'.$num.":K".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
                 $num++;
             }
         }

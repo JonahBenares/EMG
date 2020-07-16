@@ -82,12 +82,12 @@
                         <a href="<?php echo base_url(); ?>index.php/master/home/<?php echo $date?>">Home</a>
                     </li>
                     <li>
-                        <a href="#">About</a>
+                        <!-- <a href="#">About</a> -->
                         <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">Masterfile</a>
                         <ul class="collapse list-unstyled" id="pageSubmenu">
                             <li><a href="<?php echo base_url(); ?>index.php/master/user_list">Users</a></li>
-                            <li><a href="#">Page 2</a></li>
-                            <li><a href="#">Page 3</a></li>
+                            <!-- <li><a href="#">Page 2</a></li>
+                            <li><a href="#">Page 3</a></li> -->
                         </ul>
                     </li>
                     <li>
