@@ -124,10 +124,11 @@ class Master extends CI_Controller {
                 $ac=array();
                 $mt=array();
                 $bc=array();
+                $anc_o[]=array();
+                $anc_c[]=array();
                 for($a=1;$a<=5;$a++){
                     $ut='06CENPRI_U0'.$a;
                     
-
                     $r[]= $this->super_model->select_ave_where("rtd_info", "megawatts", "(interval_time LIKE '%$date%' OR interval_time = '$include' $inc) AND interval_time != '$except' AND price_node='$ut'"); 
                     $ca[] = $this->super_model->select_ave_where("rtd_other", "capacity", "rtd_hour = '$time' AND rtd_date = '$date1' AND capacity !='0' AND unit='$ut'");
                     $anc_o[] = $this->super_model->select_ave_where("rtd_other", "anc_offered", "rtd_hour = '$next' AND rtd_date = '$date1' AND anc_offered !='0' AND unit='$ut'");

@@ -76,7 +76,8 @@
                                                     <input type="text" name = "bcq[]" style="border:0px solid #000" value = "<?php if(empty($other)){ } else{ echo $other[$a]['bcq']; }?>">
                                                 </td>
                                                 <td>
-                                                    <input type="text" name = "capacity[]" style="border:0px solid #000" value = "<?php if(empty($other)){ } else{ echo $other[$a]['capacity'];}?>" id="capacity1_<?php echo $x; ?>" class="capacity1" onkeyup="duplicateCap();">
+                                                    <input type="text" name = "capacity[]" style="border:0px solid #000" value = "<?php if(empty($other)){ } else{ echo $other[$a]['capacity'];}?>" id="capacity1_<?php echo $x; ?>" class="capacity1" >
+                                                    <!--onkeyup="duplicateCap();"-->
                                                 </td>
                                                 <td>
                                                     <input type="text" name = "anc_offered[]" style="border:0px solid #000" value = "<?php if(empty($other)){ } else{ echo $other[$a]['anc_offered'];}?>">
@@ -131,7 +132,7 @@
                                                     <input type="text" name = "bcq[]" style="border:0px solid #000" value = "<?php if(empty($other)){ } else{ echo $other[$a]['bcq']; }?>">
                                                 </td>
                                                 <td>
-                                                    <input type="text" name = "capacity[]" style="border:0px solid #000" value = "<?php if(empty($other)){ } else{ echo $other[$a]['capacity'];}?>" id="capacity3_<?php echo $x; ?>" class="capacity3" onkeyup="duplicateCap();">
+                                                    <input type="text" name = "capacity[]" style="border:0px solid #000" value = "<?php if(empty($other)){ } else{ echo $other[$a]['capacity'];}?>" id="capacity3_<?php echo $x; ?>" class="capacity3" >
                                                 </td>
                                                 <td>
                                                     <input type="text" name = "anc_offered[]" style="border:0px solid #000" value = "<?php if(empty($other)){ } else{ echo $other[$a]['anc_offered']; }?>">
@@ -158,7 +159,7 @@
                                                     <input type="text" name = "bcq[]" style="border:0px solid #000" value = "<?php if(empty($other)){ } else{ echo $other[$a]['bcq']; }?>">
                                                 </td>
                                                 <td>
-                                                    <input type="text" name = "capacity[]" style="border:0px solid #000" value = "<?php if(empty($other)){ } else{ echo $other[$a]['capacity'];}?>" id="capacity4_<?php echo $x; ?>" class="capacity4" onkeyup="duplicateCap();">
+                                                    <input type="text" name = "capacity[]" style="border:0px solid #000" value = "<?php if(empty($other)){ } else{ echo $other[$a]['capacity'];}?>" id="capacity4_<?php echo $x; ?>" class="capacity4" >
                                                 </td>
                                                 <td>
                                                     <input type="text" name = "anc_offered[]" style="border:0px solid #000" value = "<?php if(empty($other)){ } else{ echo $other[$a]['anc_offered']; }?>">
@@ -184,7 +185,7 @@
                                                     <input type="text" name = "bcq[]" style="border:0px solid #000" value = "<?php if(empty($other)){ } else{ echo $other[$a]['bcq']; }?>">
                                                 </td>
                                                 <td>
-                                                    <input type="text" name = "capacity[]" style="border:0px solid #000" value = "<?php if(empty($other)){ } else{ echo $other[$a]['capacity'];}?>" id="capacity5_<?php echo $x; ?>" class="capacity5" onkeyup="duplicateCap();">
+                                                    <input type="text" name = "capacity[]" style="border:0px solid #000" value = "<?php if(empty($other)){ } else{ echo $other[$a]['capacity'];}?>" id="capacity5_<?php echo $x; ?>" class="capacity5" >
                                                 </td>
                                                 <td>
                                                     <input type="text" name = "anc_offered[]" style="border:0px solid #000" value = "<?php if(empty($other)){ } else{ echo $other[$a]['anc_offered']; }?>">
