@@ -83,10 +83,6 @@ class Master extends CI_Controller {
             if(!empty($unit)){
                 $un_info = "AND price_node = '$unit'";
                 $un_other = "AND unit = '$unit'";
-               
-            }else{
-                $un_info = "";
-                $un_other = "";
             }
 
             $except = $date1. " " .$time.":00";
@@ -112,13 +108,14 @@ class Master extends CI_Controller {
              
                 $rtd = $this->super_model->select_ave_where("rtd_info", "megawatts", "(interval_time LIKE '%$date%' OR interval_time = '$include' $inc) AND interval_time != '$except'". $un_info .""); 
                 $capacity = $this->super_model->select_ave_where("rtd_other", "capacity", "rtd_hour = '$next' AND rtd_date = '$date1' AND capacity !='0' ".$un_other."");
+                //echo "capacity", "rtd_hour = '$next' AND rtd_date = '$date1' AND capacity !='0' ".$un_other."<br>";
                 $anc_offered = $this->super_model->select_ave_where("rtd_other", "anc_offered", "rtd_hour = '$next' AND rtd_date = '$date1' AND anc_offered !='0' ".$un_other."");
                 $anc_confirmed = $this->super_model->select_ave_where("rtd_other", "anc_confirmed", "rtd_hour = '$next' AND rtd_date = '$date1' AND anc_confirmed !='0' ".$un_other."");
                 $actual_load = $this->super_model->select_ave_where("rtd_other", "actual_load", "rtd_hour = '$next' AND rtd_date = '$date1' AND actual_load !='0' ".$un_other."");
                 $mtr = $this->super_model->select_ave_where("rtd_other", "metered_q", "rtd_hour = '$next' AND rtd_date = '$date1' AND metered_q !='0' ".$un_other."");
                 $bcq = $this->super_model->select_ave_where("rtd_other", "bcq", "rtd_hour = '$next' AND rtd_date = '$date1' AND bcq !='0' ".$un_other."");
             } else {
-                 $ave=array();
+                $ave=array();
                 $r=array();
                 $ca=array();
                 $ac=array();
@@ -130,15 +127,16 @@ class Master extends CI_Controller {
                     $ut='06CENPRI_U0'.$a;
                     
                     $r[]= $this->super_model->select_ave_where("rtd_info", "megawatts", "(interval_time LIKE '%$date%' OR interval_time = '$include' $inc) AND interval_time != '$except' AND price_node='$ut'"); 
-                    $ca[] = $this->super_model->select_ave_where("rtd_other", "capacity", "rtd_hour = '$time' AND rtd_date = '$date1' AND capacity !='0' AND unit='$ut'");
+                    $ca[] = $this->super_model->select_ave_where("rtd_other", "capacity", "rtd_hour = '$next' AND rtd_date = '$date1' AND capacity !='0' AND unit='$ut'");
+                   
                     $anc_o[] = $this->super_model->select_ave_where("rtd_other", "anc_offered", "rtd_hour = '$next' AND rtd_date = '$date1' AND anc_offered !='0' AND unit='$ut'");
                     $anc_c[] = $this->super_model->select_ave_where("rtd_other", "anc_confirmed", "rtd_hour = '$next' AND rtd_date = '$date1' AND anc_confirmed !='0' AND unit='$ut'");
-                    $ac[] = $this->super_model->select_ave_where("rtd_other", "actual_load", "rtd_hour = '$time' AND rtd_date = '$date1' AND actual_load !='0' AND unit='$ut'");
-                    $mt[] = $this->super_model->select_ave_where("rtd_other", "metered_q", "rtd_hour = '$time' AND rtd_date = '$date1' AND metered_q !='0' AND unit='$ut'");
-                    $bc[] = $this->super_model->select_ave_where("rtd_other", "bcq", "rtd_hour = '$time' AND rtd_date = '$date1' AND bcq !='0' AND unit='$ut'");
+                    $ac[] = $this->super_model->select_ave_where("rtd_other", "actual_load", "rtd_hour = '$next' AND rtd_date = '$date1' AND actual_load !='0' AND unit='$ut'");
+                    $mt[] = $this->super_model->select_ave_where("rtd_other", "metered_q", "rtd_hour = '$next' AND rtd_date = '$date1' AND metered_q !='0' AND unit='$ut'");
+                    $bc[] = $this->super_model->select_ave_where("rtd_other", "bcq", "rtd_hour = '$next' AND rtd_date = '$date1' AND bcq !='0' AND unit='$ut'");
                 }
 
-                $average = $this->super_model->select_ave_where("rtd_info", "lmp", "(interval_time LIKE '%$date%' OR interval_time = '$include' $inc) AND interval_time != '$except'". $un_info .""); 
+                $average = $this->super_model->select_ave_where("rtd_info", "lmp", "(interval_time LIKE '%$date%' OR interval_time = '$include' $inc) AND interval_time != '$except'"); 
                 $rtd=array_sum($r);
                 $capacity=array_sum($ca);
                 $actual_load=array_sum($ac);
