@@ -103,7 +103,8 @@
                                                     <input type="text" name = "bcq[]" style="border:0px solid #000" value = "<?php if(empty($other)){ } else{ echo $other[$a]['bcq']; }?>">
                                                 </td>
                                                 <td>
-                                                    <input type="text" name = "capacity[]" style="border:0px solid #000" value = "<?php if(empty($other)){ } else{ echo $other[$a]['capacity'];}?>" id="capacity2_<?php echo $x; ?>" class="capacity2" onkeyup="duplicateCap();">
+                                                    <input type="text" name = "capacity[]" style="border:0px solid #000" value = "<?php if(empty($other)){ } else{ echo $other[$a]['capacity'];}?>" id="capacity2_<?php echo $x; ?>" class="capacity2" >
+                                                    <!--onkeyup="duplicateCap();"-->
                                                 </td>
                                                 <td>
                                                     <input type="text" name = "anc_offered[]" style="border:0px solid #000" value = "<?php if(empty($other)){ } else{ echo $other[$a]['anc_offered']; }?>">
