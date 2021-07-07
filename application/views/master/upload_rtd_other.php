@@ -197,7 +197,7 @@
                                             <?php $a++; } //} ?> 
                                         </tbody>
                                     </table>
-                                    <input type='hidden' name='userid' value="<?php echo $_SESSION['user_id']; ?>">
+                                    <input type='text' name='userid' value="<?php echo $_SESSION['user_id']; ?>">
                                     <input type="hidden" name="baseurl" id="baseurl" value="<?php echo base_url(); ?>">
                                     <button class="btn btn-md btn-block btn-primary" type = "submit">Upload</button>   
                                 </div>

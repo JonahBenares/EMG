@@ -7,7 +7,8 @@ function rcopy($src,$dst){
 		copy($src,$dst);
 }
 
-$copydownload = "C:\Users\CenPriTLP1-PC\Downloads\mpi_cenpri_01_Market Result-RTD Output Displays-Resource-Specific.xls";
+//$copydownload = "C:\Users\CenPriTLP1-PC\Downloads\mpi_cenpri_01_Market Result-RTD Output Displays-Energy Schedules.xls";
+$copydownload = "C:\Users\TradingDept\Downloads\mpi_cenpri_01_Market Result-RTD Output Displays-Energy Schedules.xls";
 $destination="C:\/xampp\htdocs\EMG\uploads\/mpi.xls";
 if(file_exists($copydownload)){
 	copy($copydownload,$destination);
@@ -16,7 +17,7 @@ if(file_exists($copydownload)){
 	echo "No";
 }
 
-$copydownload = "C:\Users\CenPriTLP1-PC\Downloads\mpi_cenpri_03_Market Result-RTD Output Displays-Resource-Specific.xls";
+$copydownload = "C:\Users\TradingDept\Downloads\mpi_cenpri_03_Market Result-RTD Output Displays-Energy Schedules.xls";
 $destination="C:\/xampp\htdocs\EMG\uploads\/mpi.xls";
 if(file_exists($copydownload)){
 	copy($copydownload,$destination);

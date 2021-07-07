@@ -136,7 +136,6 @@ class Master extends CI_Controller {
                     $bc[] = $this->super_model->select_ave_where("rtd_other", "bcq", "rtd_hour = '$next' AND rtd_date = '$date1' AND bcq !='0' AND unit='$ut'");
                 }
 
-                //print_r($anc_o);
                 $average = $this->super_model->select_ave_where("rtd_info", "lmp", "(interval_time LIKE '%$date%' OR interval_time = '$include' $inc) AND interval_time != '$except'"); 
                 $rtd=array_sum($r);
                 $capacity=array_sum($ca);
