@@ -27,9 +27,10 @@
 	    	$lmp = $objPHPExcel->getActiveSheet()->getCell('D'.$x)->getValue();
 	    	$loss_factor = $objPHPExcel->getActiveSheet()->getCell('E'.$x)->getValue();
 	    	/*echo "INSERT INTO rtd_info(interval_time,price_node,megawatts,lmp,loss_factor,upload_time) VALUES ('$interval','$price_node','$mw','$lmp','$loss_factor','$upload')<br>";*/
-	    	$selecttime = $con->query("SELECT interval_time FROM rtd_info WHERE interval_time = '$interval'");
+	    	$selecttime = $con->query("SELECT interval_time FROM rtd_info WHERE interval_time = '$interval' AND price_node = '$price_node'");
 	    	$rows = $selecttime->num_rows;
-	    	if($rows<5){
+	    	//if($rows<5){
+	    	if($rows==0){
 	    		$insert=$con->query("INSERT INTO rtd_info(interval_time,price_node,megawatts,lmp,loss_factor,upload_time) VALUES ('$interval','$price_node','$mw','$lmp','$loss_factor','$upload')");
 
 	    	/*	echo "INSERT INTO rtd_info(interval_time,price_node,megawatts,lmp,loss_factor,upload_time) VALUES ('$interval','$price_node','$mw','$lmp','$loss_factor','$upload')<br>";*/

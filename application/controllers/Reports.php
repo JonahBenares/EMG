@@ -90,6 +90,7 @@ class Reports extends CI_Controller {
         // /echo $query;
         $count=$this->super_model->custom_query("SELECT * FROM rtd_info WHERE $query");
         if($count!=0){
+            echo "SELECT * FROM rtd_info WHERE $query ORDER BY interval_time, price_node DESC";
             foreach($this->super_model->custom_query("SELECT * FROM rtd_info WHERE $query ORDER BY interval_time, price_node DESC") AS $all){
               /*  $next = date('H:i',strtotime($all->interval_time));
                 if($next == '00:00'){
