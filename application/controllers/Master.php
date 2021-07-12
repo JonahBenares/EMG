@@ -370,28 +370,28 @@ class Master extends CI_Controller {
         }
         $objPHPExcel->getActiveSheet()->getStyle("A1:K1")->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('DFFAAA');
         $objPHPExcel->getActiveSheet()->getStyle("A2:K2")->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('36EAFF');
-        $objPHPExcel->getActiveSheet()->getStyle("L1:N1")->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('83F997');
-        $objPHPExcel->getActiveSheet()->getStyle("L2:N2")->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('83F997');
-        $objPHPExcel->getActiveSheet()->getStyle("O1:R1")->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('DFFAAA');
-        $objPHPExcel->getActiveSheet()->getStyle("O2:R2")->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('DFFAAA');
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L1', "ANCILLARY OFFERED");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('O1', "ANCILLARY CONFIRMED");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R1', "Revenue");
+        $objPHPExcel->getActiveSheet()->getStyle("L1:N1")->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('DFFAAA');
+        $objPHPExcel->getActiveSheet()->getStyle("L2:N2")->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('DFFAAA');
+        //$objPHPExcel->getActiveSheet()->getStyle("O1:R1")->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('DFFAAA');
+        //$objPHPExcel->getActiveSheet()->getStyle("O2:R2")->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('DFFAAA');
+        //$objPHPExcel->setActiveSheetIndex(0)->setCellValue('L1', "ANCILLARY OFFERED");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L1', "ANCILLARY CONFIRMED");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('O1', "Revenue");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A2', "Hour");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C2', "Capacity");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E2', "Actual Load");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G2', "Metered Q");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('I2', "RTD");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('J2', "EAP");
+        //$objPHPExcel->setActiveSheetIndex(0)->setCellValue('E2', "Actual Load");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E2', "Metered Q");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G2', "RTD");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('H2', "EAP");
         //$objPHPExcel->setActiveSheetIndex(0)->setCellValue('K2', "PEN");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('K2', "BCQ");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('I2', "BCQ");
         //$objPHPExcel->setActiveSheetIndex(0)->setCellValue('M2', "REG");
         //$objPHPExcel->setActiveSheetIndex(0)->setCellValue('N2', "CON");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L2', "DIS");
         //$objPHPExcel->setActiveSheetIndex(0)->setCellValue('P2', "REG");
         //$objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q2', "CON");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('O2', "DIS");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R2', "Revenue");
+        //$objPHPExcel->setActiveSheetIndex(0)->setCellValue('O2', "DIS");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('O2', "Revenue");
         $styleArray = array(
             'borders' => array(
                 'allborders' => array(
@@ -399,8 +399,8 @@ class Master extends CI_Controller {
                 )
             )
         );
-        $objPHPExcel->getActiveSheet()->getStyle('A1:R1')->applyFromArray($styleArray);
-        $objPHPExcel->getActiveSheet()->getStyle('A2:R2')->applyFromArray($styleArray);
+        $objPHPExcel->getActiveSheet()->getStyle('A1:O1')->applyFromArray($styleArray);
+        $objPHPExcel->getActiveSheet()->getStyle('A2:O2')->applyFromArray($styleArray);
         $num=3;
         for($x=0;$x<=23;$x++){
             if($x<10){
@@ -522,30 +522,30 @@ class Master extends CI_Controller {
 
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$num, $time);
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C'.$num, $capacity);
-            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E'.$num, $actual_load);
-            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G'.$num, $mtr);
-            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('I'.$num, $rtd);
-            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('J'.$num, $average);
+            //$objPHPExcel->setActiveSheetIndex(0)->setCellValue('E'.$num, $actual_load);
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E'.$num, $mtr);
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G'.$num, $rtd);
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('H'.$num, $average);
             //$objPHPExcel->setActiveSheetIndex(0)->setCellValue('K'.$num, '');
-            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('K'.$num, $bcq);
-            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L'.$num, $anc_offered);
-            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('O'.$num, $anc_confirmed);
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('I'.$num, $bcq);
+            //$objPHPExcel->setActiveSheetIndex(0)->setCellValue('L'.$num, $anc_offered);
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L'.$num, $anc_confirmed);
             /*$objPHPExcel->setActiveSheetIndex(0)->setCellValue('O'.$num, '');
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('P'.$num, '');
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q'.$num, '');*/
-            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R'.$num, $revenue);
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('O'.$num, $revenue);
             $objPHPExcel->getActiveSheet()->getStyle('B'.$num.":R".$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
-            $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":R".$num)->applyFromArray($styleArray);
-            $objPHPExcel->getActiveSheet()->getStyle('L'.$num.":N".$num)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('83F997');
-            $objPHPExcel->getActiveSheet()->getStyle('O'.$num.":R".$num)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('DFFAAA');
+            $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":O".$num)->applyFromArray($styleArray);
+            $objPHPExcel->getActiveSheet()->getStyle('L'.$num.":N".$num)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('DFFAAA');
+            //$objPHPExcel->getActiveSheet()->getStyle('O'.$num.":R".$num)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('DFFAAA');
             $objPHPExcel->getActiveSheet()->getStyle('A'.$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
             $objPHPExcel->getActiveSheet()->getStyle('L'.$num.":R".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
             $objPHPExcel->getActiveSheet()->mergeCells('A'.$num.":B".$num);
             $objPHPExcel->getActiveSheet()->mergeCells('C'.$num.":D".$num);
             $objPHPExcel->getActiveSheet()->mergeCells('E'.$num.":F".$num);
-            $objPHPExcel->getActiveSheet()->mergeCells('G'.$num.":H".$num);
+            //$objPHPExcel->getActiveSheet()->mergeCells('G'.$num.":H".$num);
             $objPHPExcel->getActiveSheet()->mergeCells('L'.$num.":N".$num);
-            $objPHPExcel->getActiveSheet()->mergeCells('O'.$num.":Q".$num);
+            //$objPHPExcel->getActiveSheet()->mergeCells('O'.$num.":Q".$num);
             $num++;
         }
         $objPHPExcel->getActiveSheet()->mergeCells('A1:D1');
@@ -553,11 +553,11 @@ class Master extends CI_Controller {
         $objPHPExcel->getActiveSheet()->mergeCells('A2:B2');
         $objPHPExcel->getActiveSheet()->mergeCells('C2:D2');
         $objPHPExcel->getActiveSheet()->mergeCells('E2:F2');
-        $objPHPExcel->getActiveSheet()->mergeCells('G2:H2');
+        //$objPHPExcel->getActiveSheet()->mergeCells('G2:H2');
         $objPHPExcel->getActiveSheet()->mergeCells('L1:N1');
-        $objPHPExcel->getActiveSheet()->mergeCells('O1:Q1');
+        //$objPHPExcel->getActiveSheet()->mergeCells('O1:Q1');
         $objPHPExcel->getActiveSheet()->mergeCells("L2:N2");
-        $objPHPExcel->getActiveSheet()->mergeCells("O2:Q2");
+        //$objPHPExcel->getActiveSheet()->mergeCells("O2:Q2");
         $objPHPExcel->getActiveSheet()->getStyle('L1:O1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
         $objPHPExcel->getActiveSheet()->getStyle('A2:R2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
         $objPHPExcel->getActiveSheet()->getStyle("A1")->getFont()->setBold(true)->setName('Arial Black')->setSize(13);

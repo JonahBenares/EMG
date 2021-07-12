@@ -33,14 +33,14 @@
                                                     </select>
                                                 <input type='submit' value='Generate' onclick='generateIV()' class='btn btn-primary'>
                                             </th>
-                                            <th class="align-center faded-green" colspan="3">ANCILLARY OFFERED</th>
+                                            <!-- <th class="align-center faded-green" colspan="3">ANCILLARY OFFERED</th> -->
                                             <th class="align-center faded-orange" colspan="3">ANCILLARY CONFIRMED</th>
                                             <th class="align-center faded-orange">REVENUE</th>
                                         </tr>
                                         <tr>
                                             <th class="align-center faded-spl">Hour</th>
                                             <th class="align-center faded-spl">Capacity</th>
-                                            <th class="align-center faded-spl">Actual Load</th>
+                                            <!-- <th class="align-center faded-spl">Actual Load</th> -->
                                             <th class="align-center faded-spl">Metered Q</th>
                                             <th class="align-center faded-spl">RTD</th>
                                             <th class="align-center faded-spl">EAP</th>
@@ -48,11 +48,11 @@
                                             <th class="align-center faded-spl">BCQ</th>
                                             <!-- <th class="align-center faded-green">Reg</th>
                                             <th class="align-center faded-green">Con</th> -->
-                                            <th class="align-center faded-green" colspan="3">Dis</th>
+                                            <!-- <th class="align-center faded-green" colspan="3">Dis</th> -->
                                             <!-- <th class="align-center faded-orange">Reg</th>
                                             <th class="align-center faded-orange">Con</th> -->
                                             <th class="align-center faded-orange" colspan="3">Dis</th>
-                                            <th class="align-center faded-orange">Revenue</th>
+                                            <th class="align-center faded-orange" colspan="3">Revenue</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -73,18 +73,18 @@
                                                 <?php } ?>
                                               
                                             </td>
-                                            <td><?php echo number_format($det['cap'],2);?></td>
-                                            <td><?php echo number_format($det['actual'],2);?></td>
-                                            <td><?php echo number_format($det['mtr'],2);?></td>
-                                            <td><?php echo number_format($det['rtd'],2);?></td>
-                                            <td><?php echo number_format($det['eap'],2); ?></td>
+                                            <td><?php echo number_format($det['cap'],4);?></td>
+                                            <!-- <td><?php echo number_format($det['actual'],4);?></td> -->
+                                            <td><?php echo number_format($det['mtr'],4);?></td>
+                                            <td><?php echo number_format($det['rtd'],4);?></td>
+                                            <td><?php echo number_format($det['eap'],4); ?></td>
                                             <!-- <td></td> -->
-                                            <td><?php echo number_format($det['bcq'],2);?></td>
-                                            <td class="faded-green" colspan="3" align="center"><?php echo number_format($det['anc_offered'],2);?></td>
+                                            <td><?php echo number_format($det['bcq'],4);?></td>
+                                            <!-- <td class="faded-green" colspan="3" align="center"><?php echo number_format($det['anc_offered'],4);?></td> -->
                                            <!--  <td class="faded-green"></td>
                                             <td class="faded-green"></td> -->
-                                            <td class="faded-orange" colspan="3" align="center"><?php echo number_format($det['anc_confirmed'],2);?></td>
-                                            <td class="faded-orange" align="center"><?php echo number_format($det['revenue'],2)?></td>
+                                            <td class="faded-orange" colspan="3" align="center"><?php echo number_format($det['anc_confirmed'],4);?></td>
+                                            <td class="faded-orange" colspan="3" align="center"><?php echo number_format($det['revenue'],4)?></td>
                                             <!-- <td class="faded-orange"></td>
                                             <td class="faded-orange"></td> -->
                                         </tr>
